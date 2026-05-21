@@ -1,0 +1,39 @@
+/* ============================================================
+   LAYOUT  –  page shell, header, sidebar, main, footer
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-image: url("/images/bg.webp");
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: var(--sp-5);
+  overflow-x: hidden;
+}
+
+.l-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-9);
+  width: 100%;
+  max-width: var(--layout-lg);
+  margin: 0 auto;
+}

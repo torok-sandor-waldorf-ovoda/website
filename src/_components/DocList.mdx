@@ -1,0 +1,57 @@
+{/* DocList – list of downloadable documents with PDF icon.
+    CSS: .c-doc-list  (components.css)
+    Usage: import { DocList } from './_components/DocList.mdx' */}
+
+export function DocList() {
+  const PdfIcon = () => (
+    <svg
+      className="c-doc-list__icon"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z" />
+    </svg>
+  )
+
+  const docs = [
+  {
+    href: "/dokumentumok/TSWO_fenntartói_értékelés_20212022.pdf",
+    label: "A Török Sándor Waldorf Óvoda fenntartói értékelése az intézményben a 2021/2022. nevelési évben végzett szakmai munka eredményességéről, a pedagógiai program végrehajtásáról"
+  },
+  {
+    href: "/dokumentumok/TSWO_fenntartói_értékelés_20202021.pdf",
+    label: "A Török Sándor Waldorf Óvoda fenntartói értékelése az intézményben a 2020/2021. nevelési évben végzett szakmai munka eredményességéről, a pedagógiai program végrehajtásáról"
+  },
+  {
+    href: "/dokumentumok/TSWO_Házirend_2022.pdf",
+    label: "A Török Sándor Waldorf Óvoda házirendje"
+  },
+  {
+    href: "/dokumentumok/TSWO_SZMSZ_2022.pdf",
+    label: "A Török Sándor Waldorf Óvoda szervezeti és működési szabályzata"
+  },
+  {
+    href: "/dokumentumok/TSWPA_AlapOk_20210712.pdf",
+    label: "A Török Sándor Waldorf Pedagógiai Alapítvány alapító okirata 2021"
+  },
+  {
+    href: "/dokumentumok/TSWO - Alapitó okirat.pdf",
+    label: "A Török Sándor Waldorf Óvoda alapító okirata 2016"
+  }
+]
+
+  return (
+    <section id="dokumentumok">
+      <h2>Dokumentumok</h2>
+      <ul className="c-doc-list">
+        {docs.map(({ href, label }) => (
+          <li key={href} className="c-doc-list__item">
+            <PdfIcon />
+            <a className="c-doc-list__link" href={href}>{label}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

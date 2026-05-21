@@ -1,0 +1,53 @@
+/* ============================================================
+   DESIGN TOKENS
+   Single source of truth for every visual decision.
+   ============================================================ */
+
+:root {
+  /* ── Colour palette ──────────────────────────────────────── */
+  --color-accent: #d48c1b;
+  --color-text: #4e2818;
+  --color-text-muted: rgba(78, 40, 24, 0.8);
+  --color-bg: #f5f4ee;
+  --color-bg-secondary: #fdf2dc;
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-sans: "Rubik", sans-serif;
+  --font-display: "BaarZeitgeist", sans-serif;
+  --font-quote: "Merriweather", serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.5rem;
+  --text-3xl: 3.75rem;
+  --text-menu: 1rem;
+
+  --leading-tight: 1;
+  --leading-heading: 1.33;
+  --leading-body: 1.5;
+
+  /* ── Spacing scale ───────────────────────────────────────── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 80px;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --layout-lg: 880px;
+  --layout-content: 540px;
+
+  /* ── Radius & shadow ─────────────────────────────────────── */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-2xl: 32px;
+}

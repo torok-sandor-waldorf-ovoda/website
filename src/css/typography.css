@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@1,18..144,600&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+/* ============================================================
+   TYPOGRAPHY  –  prose rendered inside .mdx-content
+   ============================================================ */
+
+@font-face {
+  font-family: "BaarZeitgeist";
+  src: url("../fonts/BaarZeitgeist.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Page title (h1 in MDX) */
+.mdx-content h1,
+.mdx-content h2,
+.mdx-content h3 {
+  font-family: var(--font-display);
+  color: inherit;
+  padding-block: var(--sp-3) 0;
+  line-height: var(--leading-heading);
+}
+
+.mdx-content h1 {
+  font-size: var(--text-3xl);
+}
+
+.mdx-content h2 {
+  font-size: var(--text-2xl);
+}
+
+.mdx-content h3 {
+  font-size: var(--text-xl);
+}
+
+.mdx-content .quote {
+  font-family: var(--font-quote);
+  font-size: var(--text-sm);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: var(--leading-body);
+  margin-top: var(--sp-1);
+}
+
+/* Body paragraphs */
+.mdx-content p {
+  font-family: inherit;
+  font-optical-sizing: auto;
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  margin-top: var(--sp-3);
+}
+
+/* Inline emphasis */
+.mdx-content strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.mdx-content em {
+  font-style: italic;
+}
+
+/* Lists */
+.mdx-content ul,
+.mdx-content ol {
+  padding-left: var(--sp-5);
+  margin-top: var(--sp-3);
+}
+.mdx-content ul {
+  list-style: disc;
+}
+.mdx-content ol {
+  list-style: decimal;
+}
+.mdx-content li {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  line-height: var(--leading-body);
+  margin-top: var(--sp-1);
+}

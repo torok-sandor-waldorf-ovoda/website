@@ -1,0 +1,17 @@
+import nav from "../_data/nav.js";
+
+export function Header() {
+    return (
+        <header class="c-header">
+            <div class="c-header__logo">
+                <span class="c-header__logo-1">Török Sándor</span>
+                <span class="c-header__logo-2">Waldorf<br/>Óvoda</span>
+            </div>
+            <nav class="c-nav" aria-label="Főmenü">
+                {nav.map((item) => (
+                    <a href={item.url} key={item.url} class="c-nav__link">{item.label}</a>
+                ))}
+            </nav>
+        </header>
+    )
+}

@@ -1,0 +1,33 @@
+{/* Quote – pull-quote with optional attribution.
+    CSS: .c-quote  (components.css)
+    Usage: import { Quote } from './_components/Quote.mdx' */}
+
+export function Quote({ children }) {
+  return (
+    <section id="hitvallasunk" className="c-quote">
+        <video
+          className="c-quote__video"
+          src="/images/rudolf-steiner-9-16.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
+
+        <blockquote className="c-quote__content">
+          <h3 className="c-quote__title">Pedagógiai hitvallásunk</h3>
+          <div className="c-quote__text">{children}</div>
+     
+          <footer className="c-quote__attribution">
+          <img className="c-quote__attribution-avatar" src="/images/rudolf-avatar.png" alt="Rudolf Steiner" width="64" height="64" />
+          <div className="c-quote__attribution-signature">
+            <img src="/images/signature.png" alt="Rudolf Steiner" width="auto" height="48" />
+            <span>Rudolf Steiner</span>
+          </div>
+          </footer>
+          
+        </blockquote>
+    </section>
+  )
+}

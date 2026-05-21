@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Eleventy build output
+_site/
+
+# Generated client bundle (built from src/js/gallery.client.jsx on each build)
+src/js/gallery.js
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.swp
+*.swo
+*~
+
+# Optional local tooling
+.cache/
+.eleventy-cache/
