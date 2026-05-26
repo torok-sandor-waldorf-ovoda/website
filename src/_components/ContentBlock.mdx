@@ -1,0 +1,10 @@
+export function ContentBlock({ title, headingSize = 'lg', id, children }) {
+    return (
+        <section id={id} class="c-content-block">
+            <h2 class={'heading-' + headingSize}>{title}</h2>
+            <div class="c-content-block__content">
+                {children}
+            </div>
+        </section>
+    )
+}

@@ -10,6 +10,9 @@
   --color-text-muted: rgba(78, 40, 24, 0.8);
   --color-bg: #f5f4ee;
   --color-bg-secondary: #fdf2dc;
+  --color-bg-tertiary: #ecd0e1;
+  --color-bg-white: #ffffff;
+  --color-border: rgba(78, 40, 24, 0.2);
 
   /* ── Typography ──────────────────────────────────────────── */
   --font-sans: "Rubik", sans-serif;
@@ -17,16 +20,16 @@
   --font-quote: "Merriweather", serif;
 
   --text-xs: 0.8125rem;
-  --text-sm: 0.875rem;
-  --text-md: 1rem;
-  --text-lg: 1.5rem;
-  --text-xl: 1.875rem;
-  --text-2xl: 2.5rem;
-  --text-3xl: 3.75rem;
-  --text-menu: 1rem;
+  --text-sm: 0.9375rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.25rem;
+
+  --heading-md: 1.75rem;
+  --heading-lg: clamp(2rem, 6vw, 2.5rem);
+  --heading-xl: clamp(2.75rem, 6vw, 3.25rem);
 
   --leading-tight: 1;
-  --leading-heading: 1.33;
+  --leading-heading: 1;
   --leading-body: 1.5;
 
   /* ── Spacing scale ───────────────────────────────────────── */
@@ -50,4 +53,9 @@
   --radius-lg: 12px;
   --radius-xl: 20px;
   --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ── Animation ──────────────────────────────────────────── */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }

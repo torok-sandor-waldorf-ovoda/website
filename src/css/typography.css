@@ -1,12 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@1,18..144,600&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
-/* ============================================================
-   TYPOGRAPHY  –  prose rendered inside .mdx-content
-   ============================================================ */
-
 @font-face {
   font-family: "BaarZeitgeist";
-  src: url("../fonts/BaarZeitgeist.ttf") format("truetype");
+  src: url("../fonts/BaarZeitgeist-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -15,23 +11,34 @@
 /* Page title (h1 in MDX) */
 .mdx-content h1,
 .mdx-content h2,
-.mdx-content h3 {
+.mdx-content h3,
+.mdx-content [class*="heading-"] {
   font-family: var(--font-display);
   color: inherit;
   padding-block: var(--sp-3) 0;
   line-height: var(--leading-heading);
 }
 
-.mdx-content h1 {
-  font-size: var(--text-3xl);
+.mdx-content h3 {
+  font-size: var(--heading-sm);
 }
 
 .mdx-content h2 {
-  font-size: var(--text-2xl);
+  font-size: var(--heading-md);
 }
 
-.mdx-content h3 {
-  font-size: var(--text-xl);
+.mdx-content h1 {
+  font-size: var(--heading-xl);
+}
+
+.heading-sm {
+  font-size: var(--heading-sm) !important;
+}
+.heading-md {
+  font-size: var(--heading-md) !important;
+}
+.heading-xl {
+  font-size: var(--heading-xl) !important;
 }
 
 .mdx-content .quote {
@@ -48,6 +55,7 @@
 /* Body paragraphs */
 .mdx-content p {
   font-family: inherit;
+  font-size: var(--text-md);
   font-optical-sizing: auto;
   color: var(--color-text-muted);
   line-height: var(--leading-body);
@@ -56,7 +64,7 @@
 
 /* Inline emphasis */
 .mdx-content strong {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text);
 }
 
@@ -67,7 +75,6 @@
 /* Lists */
 .mdx-content ul,
 .mdx-content ol {
-  padding-left: var(--sp-5);
   margin-top: var(--sp-3);
 }
 .mdx-content ul {
@@ -78,8 +85,18 @@
 }
 .mdx-content li {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   color: var(--color-text);
   line-height: var(--leading-body);
   margin-top: var(--sp-1);
+}
+
+.mdx-content a {
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease;
+}
+
+.mdx-content a:hover {
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
 }

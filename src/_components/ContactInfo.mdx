@@ -1,16 +1,12 @@
-{/* ContactInfo – definition-list style contact details.
-    CSS: .c-contact  (components.css)
-    Usage: import { ContactInfo } from './_components/ContactInfo.mdx' */}
+{/* ContactInfo – definition-list style contact details. Styles: ContactInfo.css */}
 
-export function ContactInfo({ items = [] }) {
+export function ContactInfo({ title, id, children }) {
   return (
-    <dl className="c-contact">
-      {items.map(({ label, value }) => (
-        <div key={label} className="c-contact__row">
-          <dt className="c-contact__label">{label}</dt>
-          <dd className="c-contact__value">{value}</dd>
-        </div>
-      ))}
-    </dl>
+    <div id={id} class="c-contact">
+      <h2 class="c-contact__title">{title}</h2>
+      <div class="c-contact__content">
+        {children}
+      </div>
+    </div>
   )
 }

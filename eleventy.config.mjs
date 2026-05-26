@@ -1,10 +1,38 @@
-import { readdir } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { register } from "node:module";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import * as esbuild from "esbuild";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
+const componentsDir = path.join(rootDir, "src/_components");
+const componentsCss = path.join(rootDir, "src/css/components.css");
+
+async function listComponentFiles(ext) {
+  return (await readdir(componentsDir))
+    .filter((f) => f.endsWith(ext))
+    .sort();
+}
+
+async function mergeComponentCss() {
+  const files = await listComponentFiles(".css");
+  const chunks = await Promise.all(
+    files.map(async (file) => {
+      const css = await readFile(path.join(componentsDir, file), "utf8");
+      return `/* ── ${file} ── */\n${css.trim()}\n`;
+    }),
+  );
+  const output = `/* AUTO-GENERATED – edit src/_components/*.css, not this file. */\n\n${chunks.join("\n")}`;
+  let existing = "";
+  try {
+    existing = await readFile(componentsCss, "utf8");
+  } catch {
+    /* first build */
+  }
+  if (existing !== output) {
+    await writeFile(componentsCss, output);
+  }
+}
 
 async function buildGalleryClient() {
   await esbuild.build({
@@ -29,17 +57,11 @@ register("@mdx-js/node-loader", import.meta.url);
 // ── Global components ──────────────────────────────────────────────────────
 // Loaded once, then injected into every MDX page as `components`.
 // This means page .mdx files need NO import statements for these.
-const componentsDir = path.join(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "src/_components",
-);
 
 let _components = null;
 async function getComponents() {
   if (_components) return _components;
-  const files = (await readdir(componentsDir)).filter((f) =>
-    f.endsWith(".mdx"),
-  );
+  const files = await listComponentFiles(".mdx");
   const entries = await Promise.all(
     files.map(async (file) => {
       const name = path.basename(file, ".mdx");
@@ -52,7 +74,11 @@ async function getComponents() {
 }
 
 export default function (eleventyConfig) {
+  eleventyConfig.watchIgnores.add("src/js/gallery.js");
+  eleventyConfig.watchIgnores.add("src/css/components.css");
+
   eleventyConfig.on("eleventy.before", async () => {
+    await mergeComponentCss();
     await buildGalleryClient();
   });
   eleventyConfig.addWatchTarget("src/js/gallery.client.jsx");
@@ -90,7 +116,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addWatchTarget("src/_components/**");
 
   eleventyConfig.on("eleventy.beforeWatch", (changedFiles) => {
-    if (changedFiles.some((f) => f.includes("_components"))) {
+    if (
+      changedFiles.some((f) => f.includes("_components") && f.endsWith(".mdx"))
+    ) {
       _components = null;
     }
   });

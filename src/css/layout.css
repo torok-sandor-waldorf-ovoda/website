@@ -32,8 +32,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-9);
+  gap: var(--sp-7);
   width: 100%;
   max-width: var(--layout-lg);
   margin: 0 auto;
+}
+
+section {
+  scroll-margin-top: 7rem;
 }

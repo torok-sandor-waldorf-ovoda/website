@@ -1,7 +1,7 @@
 import { Children, isValidElement } from "react";
 
 export function Gallery({ children, images: imagesProp, visibleCount = 4, id }) {
-  const rotations = [-6, 4, -4, 7, -5, 3];
+  const rotations = [-6, 12, -5, 9, -5, 3];
 
   const imagesFromChildren = (childNodes) => {
     const list = [];
@@ -50,7 +50,7 @@ export function Gallery({ children, images: imagesProp, visibleCount = 4, id }) 
               }}
               aria-label={`${i + 1}. kép megnyitása`}
             >
-              <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
+              <img draggable={false} src={img.src} alt={img.alt} loading="lazy" decoding="async" />
             </button>
           ))}
         </div>

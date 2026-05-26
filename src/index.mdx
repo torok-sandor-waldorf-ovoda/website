@@ -6,12 +6,7 @@ permalink: /index.html
 
 <Header />
 
-<Intro title="Köszöntő">
-  Óvodánk 1990-ben alakult, akkor még egy önkormányzati óvoda földszinti helyiségeit béreltük a II. kerületi Bolyai utcában. 2010 májusában az önkormányzat már nem tudta a bérleményt a számunkra biztosítani, így költöznünk kellett.
-
-  Jelenleg a **II. ker. Guyon Richárd u. 3.** sz. alatt található az óvoda. Itt egy vegyes életkorú gyermekcsoportban fogadjuk a Waldorf-pedagógiát választó családok gyermekeit. Óvodánk tágas belső terei megfelelő feltételeket teremtenek az óvodás korú gyermekek neveléséhez.
-
-  <Gallery visibleCount={4}>
+<Gallery visibleCount={4}>
     <img src="/images/gallery/01.webp" alt="Óvoda épülete" />
     <img src="/images/gallery/02.webp" alt="Kert és játszótér" />
     <img src="/images/gallery/03.webp" alt="Belső tér" />
@@ -20,9 +15,14 @@ permalink: /index.html
     <img src="/images/gallery/06.webp" alt="Ünnepi dekoráció" />
     <img src="/images/gallery/07.webp" alt="Kerti játék" />
     <img src="/images/gallery/08.webp" alt="Csoportfoglalkozás" />
-    <img src="/images/gallery/09.webp" alt="Évszakok sarok" />
-    <img src="/images/gallery/10.webp" alt="Közös étkezés" />
   </Gallery>
+
+<Intro title="Köszöntő" headingSize="xl" id="koszonto">
+  Óvodánk 1990-ben alakult, akkor még egy önkormányzati óvoda földszinti helyiségeit béreltük a II. kerületi Bolyai utcában. 2010 májusában az önkormányzat már nem tudta a bérleményt a számunkra biztosítani, így költöznünk kellett.
+
+  Jelenleg a **II. ker. Guyon Richárd u. 3.** sz. alatt található az óvoda. Itt egy vegyes életkorú gyermekcsoportban fogadjuk a Waldorf-pedagógiát választó családok gyermekeit. Óvodánk tágas belső terei megfelelő feltételeket teremtenek az óvodás korú gyermekek neveléséhez.
+
+  <IntroMore>
 
   A mindennapi működést a szülők aktív közreműködése biztosítja. (Hétvégi takarítás, kertrendezés, szerelési munkák, bevásárlás, gazdasági ügyek stb.) Szülői esteket szervezünk havi egy alkalommal, melyek során beszélgetünk az eltelt, megélt időszakról, nevelési helyzetekről, a Waldorf-pedagógiáról, ünnepekről és a elkészítjük a következő hetek munkáját, feladatait.
 
@@ -35,6 +35,7 @@ permalink: /index.html
   Az óvodában gabonaételeket adunk tízóraira a gyerekeknek, a főzésük helyben történik.
 
   Az érdeklődő szülőknek **beszélgetés-sorozatot** szervezünk minden évben, melyek során a Waldorf-pedagógiáról, az óvoda életéről beszélgetünk.
+  </IntroMore>
 </Intro>
 
 
@@ -46,49 +47,65 @@ permalink: /index.html
   Képességeket ébresszünk fel, és ne meggyőződéseket közvetítsünk. Ne a mi igazságainkban higgyen az ifjúság, hanem a mi személyiségünkben. Azt vegyék észre a felnövekvők, hogy mi keresők vagyunk. És őket is a keresők útjára kell vezetnünk.
 </Quote>
 
-<h2 id="elerhetoseg">Elérhetőségeink</h2>
+<Cards>
+  <Card title="Baba-mama délutánok" id="baba-mama">
+    Óvodánkban minden év októberétől **baba-mama délutánokat** szervezünk heti rendszerességgel, a két éves kort betöltött gyermekek és szüleik számára.
+    Várunk minden kedves érdeklődőt!
+    Kérjük, telefonon (**Keszthelyi Terézia: [+36 20 572-1091](tel:+36205721091)**) vagy e-mailben (**[tswovoda@gmail.com](mailto:tswovoda@gmail.com)**) érdeklődjenek a tudnivalókról, a délutáni órákban.
+  </Card>
+  <Card title="Szülői délutánok" id="szuloknek">
+    Lehetőség nyílik a szülők számára **beszélgető délutánokon** való részvételre, amelyek során ismerkedhetnek a waldorf-pedagógia gyermekszemléletével.
+    Jelentkezni lehet reggel 7h és fél 9h között, valamint délután 13h és fél 14h között az óvoda telefonszámán:
+    **[+36-1-326-2057](tel:+3613262057)**
+  </Card>
+</Cards>
 
-<ContactInfo items={[
-  { label: "Cím",          value: "1026 Budapest, Guyon Richárd u. 3." },
-  { label: "Telefon",      value: "326-2057 (reggel 7–8 között, vagy délután 13:30 után)" },
-  { label: "E-mail",       value: "tswovoda@gmail.com" },
-  { label: "Óvodavezető",  value: "Füle Erika" },
-  { label: "Fenntartó",    value: "Török Sándor Waldorf-pedagógiai Alapítvány" },
-  { label: "Fenntartó címe", value: "1028 Budapest, Kossuth Lajos utca 15–17." }
+<ContentBlock title="Óvodai jelentkezés" id="felveteli">
+  Óvodánk a „Waldorf Óvodapedagógiai Program" alapján elkészített Helyi Pedagógiai Program alapján működik, látja el nevelési feladatát. Minden évben csak szabad férőhelyek esetén tudunk jelentkezéseket fogadni.
+  A jelentkezés előfeltétele az óvodánk nevelési és működési elveit ismertető **szülői esteken való részvétel**, melyekről telefonon (**+36-1-326-2057**) vagy e-mailben (**[tswovoda@gmail.com](mailto:tswovoda@gmail.com)**) lehet érdeklődni.
+</ContentBlock>
+
+
+<DocList items={[
+  {
+    href: "/dokumentumok/TSWO_fenntartói_értékelés_20212022.pdf",
+    label: "A Török Sándor Waldorf Óvoda fenntartói értékelése az intézményben a 2021/2022. nevelési évben végzett szakmai munka eredményességéről, a pedagógiai program végrehajtásáról"
+  },
+  {
+    href: "/dokumentumok/TSWO_fenntartói_értékelés_20202021.pdf",
+    label: "A Török Sándor Waldorf Óvoda fenntartói értékelése az intézményben a 2020/2021. nevelési évben végzett szakmai munka eredményességéről, a pedagógiai program végrehajtásáról"
+  },
+  {
+    href: "/dokumentumok/TSWO_Házirend_2022.pdf",
+    label: "A Török Sándor Waldorf Óvoda házirendje"
+  },
+  {
+    href: "/dokumentumok/TSWO_SZMSZ_2022.pdf",
+    label: "A Török Sándor Waldorf Óvoda szervezeti és működési szabályzata"
+  },
+  {
+    href: "/dokumentumok/TSWPA_AlapOk_20210712.pdf",
+    label: "A Török Sándor Waldorf Pedagógiai Alapítvány alapító okirata 2021"
+  },
+  {
+    href: "/dokumentumok/TSWO - Alapitó okirat.pdf",
+    label: "A Török Sándor Waldorf Óvoda alapító okirata 2016"
+  }
 ]} />
 
-<h2 id="baba-mama">Baba-mama délutánok</h2>
+<ContactInfo title="Elérhetőségeink" id="elerhetoseg">
+    **Óvoda**  
+    1026 Budapest, Guyon Richárd u. 3.  
+    **+36-1-326-2057**  
+    **[tswovoda@gmail.com](mailto:tswovoda@gmail.com)**
 
-Óvodánkban minden év októberétől **baba-mama délutánokat** szervezünk heti rendszerességgel, a két éves kort betöltött gyermekek és szüleik számára.
+    **Óvodavezető**  
+    Füle Erika
 
-<Callout>Várunk minden kedves érdeklődőt!</Callout>
 
-Kérjük, telefonon érdeklődjenek a tudnivalókról, a délutáni órákban.
-
-**Keszthelyi Terézia:** +36 20 572-1091
-
-<h2 id="szuloknek">Szülői délutánok</h2>
-
-Lehetőség nyílik a szülők számára **beszélgető délutánokon** való részvételre, amelyek során ismerkedhetnek a waldorf-pedagógia gyermekszemléletével.
-
-Jelentkezni lehet reggel 7h és fél 9h között, valamint délután 13h és fél 14h között az óvoda telefonszámán:
-
-**+36-1-326-2057**
-
-<h2 id="felveteli">Felvételi közlemény</h2>
-
-### Óvodai jelentkezés
-
-Óvodánk a „Waldorf Óvodapedagógiai Program" alapján elkészített Helyi Pedagógiai Program alapján működik, látja el nevelési feladatát. Minden évben csak szabad férőhelyek esetén tudunk jelentkezéseket fogadni.
-
-A jelentkezés előfeltétele az óvodánk nevelési és működési elveit ismertető **szülői esteken való részvétel**, melyekről telefonon vagy e-mailben lehet érdeklődni:
-
-- Telefon: **06-1-326-2057**
-- E-mail: **tswovoda@gmail.com**
-
-**Füle Erike Ilona**
-Óvodavezető
-
-<DocList />
+    **Fenntartó**  
+    Török Sándor Waldorf-pedagógiai Alapítvány  
+    1028 Budapest, Kossuth Lajos utca 15–17.
+</ContactInfo>
 
 <Footer />

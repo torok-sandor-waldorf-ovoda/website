@@ -1,10 +1,70 @@
-export function Intro({ title, children }) {
+import { Children, isValidElement } from "react";
+
+export function Intro({
+  title,
+  headingSize = "xl",
+  id,
+  label = "Tovább olvasok",
+  children,
+}) {
+  function isIntroMore(child) {
     return (
-        <section class="c-intro">
-            <h1>{title}</h1>
-            <div class="c-intro__content">
-                {children}
+      isValidElement(child) &&
+      typeof child.type === "function" &&
+      child.type.name === "IntroMore"
+    );
+  }
+
+  function partitionChildren(childNodes) {
+    const teaser = [];
+    const more = [];
+
+    Children.forEach(childNodes, (child) => {
+      if (typeof child === "string" && !child.trim()) return;
+      if (isIntroMore(child)) {
+        Children.forEach(child.props.children, (nested) => {
+          if (typeof nested === "string" && !nested.trim()) return;
+          more.push(nested);
+        });
+        return;
+      }
+      teaser.push(child);
+    });
+
+    return { teaser, more };
+  }
+
+  const { teaser, more } = partitionChildren(children);
+  const panelId = id ? `${id}-more` : undefined;
+  const hasMore = more.length > 0;
+
+  return (
+    <section id={id} class="c-intro" data-intro>
+      <h2 class={"heading-" + headingSize}>{title}</h2>
+      <div class="c-intro__content">
+        {teaser.length > 0 && <div class="c-intro__teaser">{teaser}</div>}
+        {hasMore && (
+          <div class="c-intro__expand">
+            <button
+              type="button"
+              class="c-intro__toggle"
+              data-intro-toggle
+              aria-expanded="false"
+              aria-controls={panelId}
+            >
+              {label}
+            </button>
+            <div
+              id={panelId}
+              class="c-intro__more"
+              data-intro-more
+              aria-hidden="true"
+            >
+              <div class="c-intro__more-inner">{more}</div>
             </div>
-        </section>
-    )
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
