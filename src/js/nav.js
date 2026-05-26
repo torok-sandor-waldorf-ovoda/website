@@ -6,7 +6,11 @@ function initNavScrollSpy() {
   const nav = document.querySelector(".c-nav");
   if (!nav) return;
 
-  const links = [...nav.querySelectorAll('.c-nav__link[href^="#"]')];
+  const viewport = nav.querySelector(".c-nav__viewport");
+  const track = nav.querySelector(".c-nav__track");
+  if (!viewport || !track) return;
+
+  const links = [...track.querySelectorAll('.c-nav__link[href^="#"]')];
   if (!links.length) return;
 
   const entries = [];
@@ -21,7 +25,7 @@ function initNavScrollSpy() {
   const offset =
     parseFloat(getComputedStyle(entries[0].section).scrollMarginTop) || 112;
 
-  const indicator = nav.querySelector(".c-nav__indicator");
+  const indicator = track.querySelector(".c-nav__indicator");
   if (!indicator) return;
 
   let activeId = null;
@@ -32,19 +36,17 @@ function initNavScrollSpy() {
   ).matches;
 
   function moveIndicator(link) {
-    const navRect = nav.getBoundingClientRect();
-    const linkRect = link.getBoundingClientRect();
-    indicator.style.width = `${linkRect.width}px`;
-    indicator.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
+    indicator.style.width = `${link.offsetWidth}px`;
+    indicator.style.transform = `translateX(${link.offsetLeft}px)`;
   }
 
   function scrollActiveLinkIntoNav(link) {
-    const maxScroll = nav.scrollWidth - nav.clientWidth;
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
     if (maxScroll <= 0) return;
 
     const target =
-      link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2;
-    nav.scrollTo({
+      link.offsetLeft - (viewport.clientWidth - link.offsetWidth) / 2;
+    viewport.scrollTo({
       left: Math.min(maxScroll, Math.max(0, target)),
       behavior: reduceMotion ? "auto" : "smooth",
     });
@@ -107,10 +109,9 @@ function initNavScrollSpy() {
     scheduleUpdate();
     syncIndicator();
   });
-  nav.addEventListener("scroll", syncIndicator, { passive: true });
 
   const resizeObserver = new ResizeObserver(syncIndicator);
-  resizeObserver.observe(nav);
+  resizeObserver.observe(track);
   for (const { link } of entries) {
     resizeObserver.observe(link);
   }

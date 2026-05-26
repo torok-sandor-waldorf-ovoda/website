@@ -126,6 +126,7 @@
   z-index: 1001;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: var(--sp-4);
   width: 100%;
@@ -262,7 +263,7 @@
 
 @media (max-width: 480px) {
   .c-gallery-overlay {
-    padding: var(--sp-5) var(--sp-4);
+    padding-block: var(--sp-4);
   }
 }
 

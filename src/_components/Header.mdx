@@ -17,10 +17,14 @@ export function Header() {
                 </div>
             </header>
             <nav class="c-nav" aria-label="Főmenü">
-                <span class="c-nav__indicator" aria-hidden="true" />
-                {nav.map((item) => (
-                    <a href={item.url} key={item.url} class="c-nav__link">{item.label}</a>
-                ))}
+                <div class="c-nav__viewport">
+                    <div class="c-nav__track">
+                        <span class="c-nav__indicator" aria-hidden="true" />
+                        {nav.map((item) => (
+                            <a href={item.url} key={item.url} class="c-nav__link">{item.label}</a>
+                        ))}
+                    </div>
+                </div>
             </nav>
         </>
     )
