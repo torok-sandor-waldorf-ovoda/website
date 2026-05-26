@@ -1,5 +1,6 @@
 .c-gallery {
-  width: 100%;
+  width: 120%;
+  max-width: 100vw;
   position: relative;
   padding-block: var(--sp-6);
 }
@@ -51,21 +52,6 @@
 .c-gallery__thumb:hover img,
 .c-gallery__thumb:focus-visible img {
   transform: scale(1.1) rotate(var(--hover-rotate, 0deg));
-}
-
-.c-gallery__badge {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
-  background: #2f6fd6;
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
 }
 
 @keyframes gallery-thumb-enter {

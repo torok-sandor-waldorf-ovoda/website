@@ -2,9 +2,12 @@
    LAYOUT  –  page shell, header, sidebar, main, footer
    ============================================================ */
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
+
 body {
   background: var(--color-bg);
   font-family: var(--font-sans);
@@ -19,6 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: var(--sp-5);
   overflow-x: hidden;
+  width: 100%;
 }
 
 .l-body {

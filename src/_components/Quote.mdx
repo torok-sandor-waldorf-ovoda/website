@@ -20,19 +20,24 @@ export function Quote({ children }) {
         </blockquote>
 
         <video
-          className="c-quote__video"
+          className="c-quote__video c-quote__video--desktop"
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
         >
-          <source
-            src="/images/rudolf-steiner-mobile.mp4"
-            media="(max-width: 768px)"
-            type="video/mp4"
-          />
           <source src="/images/rudolf-steiner-9-16.mp4" type="video/mp4" />
+        </video>
+        <video
+          className="c-quote__video c-quote__video--mobile"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/images/rudolf-steiner-mobile.mp4" type="video/mp4" />
         </video>
     </section>
   )

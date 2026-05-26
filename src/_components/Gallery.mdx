@@ -54,11 +54,6 @@ export function Gallery({ children, images: imagesProp, visibleCount = 4, id }) 
             </button>
           ))}
         </div>
-        {remaining > 0 && (
-          <span class="c-gallery__badge" aria-hidden="true">
-            +{remaining} fotó
-          </span>
-        )}  
     </div>
   );
 }

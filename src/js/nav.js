@@ -38,6 +38,18 @@ function initNavScrollSpy() {
     indicator.style.transform = `translateX(${linkRect.left - navRect.left}px)`;
   }
 
+  function scrollActiveLinkIntoNav(link) {
+    const maxScroll = nav.scrollWidth - nav.clientWidth;
+    if (maxScroll <= 0) return;
+
+    const target =
+      link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2;
+    nav.scrollTo({
+      left: Math.min(maxScroll, Math.max(0, target)),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }
+
   function setActive(id) {
     const changed = id !== activeId;
     activeId = id;
@@ -48,13 +60,7 @@ function initNavScrollSpy() {
       if (isActive) {
         activeLink = link;
         link.setAttribute("aria-current", "location");
-        if (changed) {
-          link.scrollIntoView({
-            inline: "center",
-            block: "nearest",
-            behavior: reduceMotion ? "auto" : "smooth",
-          });
-        }
+        if (changed) scrollActiveLinkIntoNav(link);
       } else {
         link.removeAttribute("aria-current");
       }

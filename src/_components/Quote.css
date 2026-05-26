@@ -13,6 +13,10 @@
   object-fit: cover;
 }
 
+.c-quote__video--mobile {
+  display: none;
+}
+
 .c-quote__content {
   flex: 2;
   display: flex;
@@ -74,5 +78,13 @@
   .c-quote__video {
     max-width: none;
     width: 100%;
+  }
+
+  .c-quote__video--desktop {
+    display: none;
+  }
+
+  .c-quote__video--mobile {
+    display: block;
   }
 }
