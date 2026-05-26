@@ -1,8 +1,15 @@
 .c-gallery {
-  width: 120%;
+  width: 140%;
   max-width: 100vw;
   position: relative;
-  padding-block: var(--sp-6);
+  padding: 3rem 5rem;
+  overflow: clip;
+}
+
+@media (max-width: 768px) {
+  .c-gallery {
+    margin: -2rem 0 -5rem;
+  }
 }
 
 .c-gallery__stack {
