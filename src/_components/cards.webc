@@ -1,0 +1,16 @@
+<style>
+  .c-cards {
+    display: flex;
+    flex-direction: row;
+    gap: var(--sp-6);
+    margin-top: calc(var(--sp-4) * -1);
+  }
+
+  @media (max-width: 768px) {
+    .c-cards {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div webc:root="override" class="c-cards"><slot></slot></div>

@@ -1,0 +1,55 @@
+---
+layout: base.webc
+eleventyExcludeFromCollections: true
+---
+
+<script webc:setup>
+  const formattedDate = page.date.toLocaleDateString("hu-HU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+</script>
+
+<article class="c-post">
+  <header class="c-post__header">
+    <h1 class="c-post__title" @text="title"></h1>
+    <time
+      class="c-post__date"
+      :datetime="page.date.toISOString()"
+      @text="formattedDate"
+    ></time>
+  </header>
+  <div class="c-post__body" @html="content"></div>
+</article>
+
+<style>
+  .c-post {
+    width: 100%;
+    padding: var(--sp-6);
+    max-width: 42rem;
+  }
+
+  .c-post__header {
+    margin-bottom: var(--sp-5);
+  }
+
+  .c-post__title {
+    font-size: var(--heading-lg);
+    margin-bottom: var(--sp-2);
+  }
+
+  .c-post__date {
+    font-size: var(--text-sm);
+    color: var(--clr-text-muted);
+  }
+
+  .c-post__body {
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+
+  .c-post__body p {
+    margin-bottom: var(--sp-4);
+  }
+</style>

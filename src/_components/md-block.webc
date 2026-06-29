@@ -1,0 +1,1 @@
+<template webc:type="11ty" 11ty:type="liquid,md" webc:root="override">{{ slots.text.default }}</template>

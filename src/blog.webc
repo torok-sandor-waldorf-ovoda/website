@@ -1,0 +1,76 @@
+---
+layout: base.webc
+title: Hírek
+description: Hírek és bejegyzések a Török Sándor Waldorf Óvodából
+permalink: /blog/index.html
+---
+
+<section class="c-blog-index">
+  <h1 class="c-blog-index__title">Hírek</h1>
+  <ul class="c-blog-index__list">
+    <li webc:for="post of collections.posts" class="c-blog-index__item">
+      <a :href="post.url" class="c-blog-index__link">
+        <span class="c-blog-index__post-title" @text="post.data.title"></span>
+        <time
+          class="c-blog-index__date"
+          :datetime="post.date.toISOString()"
+          @text="post.date.toLocaleDateString('hu-HU')"
+        ></time>
+      </a>
+    </li>
+  </ul>
+  <p webc:if="!collections.posts.length" class="c-blog-index__empty">
+    Még nincsenek bejegyzések.
+  </p>
+</section>
+
+<style>
+  .c-blog-index {
+    width: 100%;
+    padding: var(--sp-6);
+    max-width: 42rem;
+  }
+
+  .c-blog-index__title {
+    font-size: var(--heading-lg);
+    margin-bottom: var(--sp-5);
+  }
+
+  .c-blog-index__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .c-blog-index__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .c-blog-index__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-4) 0;
+    color: inherit;
+  }
+
+  .c-blog-index__link:hover {
+    color: var(--color-accent);
+    border-color: transparent;
+  }
+
+  .c-blog-index__post-title {
+    font-size: var(--text-md);
+    font-weight: 500;
+  }
+
+  .c-blog-index__date {
+    font-size: var(--text-sm);
+    color: var(--clr-text-muted);
+  }
+
+  .c-blog-index__empty {
+    color: var(--clr-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

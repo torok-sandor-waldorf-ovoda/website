@@ -1,0 +1,10 @@
+{
+  "items": [
+    { "label": "Pedagógiai Hitvallásunk", "url": "#hitvallasunk" },
+    { "label": "Baba-mama", "url": "#baba-mama" },
+    { "label": "Szülőknek", "url": "#szuloknek" },
+    { "label": "Felvételi", "url": "#felveteli" },
+    { "label": "Dokumentumok", "url": "#dokumentumok" },
+    { "label": "Elérhetőségeink", "url": "#elerhetoseg" }
+  ]
+}

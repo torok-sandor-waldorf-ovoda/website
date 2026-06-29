@@ -1,0 +1,89 @@
+<style>
+  .c-docs {
+    padding: var(--sp-6);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    justify-content: flex-start;
+    gap: var(--sp-7);
+  }
+
+  @media (max-width: 768px) {
+    .c-docs {
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+  }
+
+  .c-docs__list {
+    list-style: none;
+    padding: 0;
+    margin-top: calc(var(--sp-2) * -1) !important;
+  }
+
+  .c-docs__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-4);
+    padding: var(--sp-4);
+    margin-left: calc(var(--sp-4) * -1);
+    margin-right: calc(var(--sp-4) * -1);
+    width: calc(100% + (2 * var(--sp-4)));
+    border-radius: var(--radius-lg);
+    transition: background-color 0.3s ease;
+  }
+
+  .c-docs__item:hover {
+    background-color: color-mix(in srgb, var(--color-bg) 90%, #64531e 10%);
+  }
+
+  .c-docs__icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    color: var(--clr-primary);
+    margin-top: 2px;
+  }
+
+  .c-docs__link {
+    padding-top: var(--sp-1);
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    font-weight: 450;
+    color: var(--clr-maroon);
+    line-height: var(--leading-body);
+  }
+
+  a.c-docs__link:hover {
+    color: var(--color-primary);
+    border-color: transparent;
+  }
+</style>
+
+<script webc:setup>
+  const docItems = $data.documents.items;
+</script>
+
+<section webc:root="override" id="dokumentumok" class="c-docs">
+  <h2 class="c-docs-section__title">Dokumentumok</h2>
+  <ul class="c-docs__list">
+    <li webc:for="doc of docItems" class="c-docs__item">
+      <svg
+        class="c-docs__icon"
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M3.556 0H28.444C30.4 0 32 1.6 32 3.556V28.444C32 30.4 30.4 32 28.444 32H3.556C1.6 32 0 30.4 0 28.444V3.556C0 1.6 1.6 0 3.556 0ZM8.888 15.112H7.112V13.332H8.888V15.112ZM11.556 15.112C11.556 16.586 10.364 17.778 8.888 17.778H7.112V21.334H4.444V10.666H8.888C10.364 10.666 11.556 11.858 11.556 13.334V15.112ZM24.888 13.332H29.334V10.668H22.22V21.336H24.886V17.778H27.554V15.112H24.886V13.332H24.888ZM20.444 18.666C20.444 20.142 19.254 21.334 17.778 21.334H13.334V10.666H17.778C19.254 10.666 20.444 11.858 20.444 13.334V18.666ZM17.778 18.666H16V13.334H17.778V18.666Z"
+          fill="#CC8E2D"
+        />
+      </svg>
+      <a class="c-docs__link" :href="doc.href" @text="doc.label"></a>
+    </li>
+  </ul>
+</section>

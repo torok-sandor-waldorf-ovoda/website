@@ -1,0 +1,43 @@
+<style>
+  .c-contact {
+    width: 100%;
+    padding: var(--sp-6);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    color: var(--clr-text);
+    line-height: var(--leading-body);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .c-contact__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .c-contact__content {
+    margin-top: var(--sp-3);
+    display: flex;
+    flex-direction: row;
+    gap: var(--sp-7);
+  }
+
+  .c-contact__content p {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: var(--leading-body);
+  }
+
+  @media (max-width: 900px) {
+    .c-contact__content {
+      flex-direction: column;
+      gap: var(--sp-4);
+    }
+  }
+</style>
+
+<div webc:root="override" :id="id" class="c-contact">
+  <h2 class="c-contact__title" @text="title"></h2>
+  <div class="c-contact__content">
+    <template webc:type="11ty" 11ty:type="liquid,md">{{ slots.text.default }}</template>
+  </div>
+</div>

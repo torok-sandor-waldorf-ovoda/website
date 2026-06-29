@@ -1,0 +1,99 @@
+---
+layout: base.webc
+title: Török Sándor Waldorf Óvoda
+permalink: /index.html
+---
+
+<page-header></page-header>
+
+<gallery></gallery>
+
+<intro title="Köszöntő" headingSize="xl" id="koszonto" @showmore="true">
+  <md-block slot="teaser">
+    Óvodánk 1990-ben alakult, akkor még egy önkormányzati óvoda földszinti
+    helyiségeit béreltük a II. kerületi Bolyai utcában. 2010 májusában az
+    önkormányzat már nem tudta a bérleményt a számunkra biztosítani, így
+    költöznünk kellett. Jelenleg a **II. ker. Guyon Richárd u. 3.** sz. alatt
+    található az óvoda. Itt egy vegyes életkorú gyermekcsoportban fogadjuk a
+    Waldorf-pedagógiát választó családok gyermekeit. Óvodánk tágas belső terei
+    megfelelő feltételeket teremtenek az óvodás korú gyermekek neveléséhez.
+  </md-block>
+  <md-block slot="more">
+    A mindennapi működést a szülők aktív közreműködése biztosítja. (Hétvégi
+    takarítás, kertrendezés, szerelési munkák, bevásárlás, gazdasági ügyek stb.)
+    Szülői esteket szervezünk havi egy alkalommal, melyek során beszélgetünk az
+    eltelt, megélt időszakról, nevelési helyzetekről, a Waldorf-pedagógiáról,
+    ünnepekről és a elkészítjük a következő hetek munkáját, feladatait.
+    Legfontosabbnak azt tartjuk, hogy a gyerekek **családias, derűs, barátságos,
+    érzelmi biztonságot nyújtó légkörben** élhessenek és tapasztalhassák azt,
+    hogy „a világ jó". Ezért élünk pontos napi, heti, havi és éves ritmusban a
+    gyermekekkel. Az óvodás korú gyermek legfontosabb és legfejlesztőbb
+    tevékenysége a szabad játék. Ennek érdekében az óvodában a gyerekek kevés
+    konkrét játékszerrel, inkább eszközökkel (farönkök, kendők, párnák, deszkák,
+    kövek, magok, fajátékok stb.) találkoznak a játék során. Ezzel a fantázia
+    erők növelését, a gyerek belső aktivitását kívánjuk elősegíteni. Fontosnak
+    tartjuk, hogy a felnőtt mintául szolgáló, utánozható tevékenységeket
+    végezzen a gyerekek között, hiszen ahogy a felnőtt él a gyerek
+    környezetében, olyanná válik ő maga is. Minden ezen az úton válik belsővé a
+    számára. A gyermek fejlődését íly módon biztosító környezetben a gyermek
+    „magától" érik meg az iskolára. A túl korai absztrakt, verbális,
+    intellektuális tanítás, fejlesztés gátat szab a testet-lelket építő erők
+    munkájának, ezért nem alkalmazunk külön iskolára felkészítő tevékenységeket.
+    Az óvodában gabonaételeket adunk tízóraira a gyerekeknek, a főzésük helyben
+    történik. Az érdeklődő szülőknek **beszélgetés-sorozatot** szervezünk minden
+    évben, melyek során a Waldorf-pedagógiáról, az óvoda életéről beszélgetünk.
+  </md-block>
+</intro>
+
+<quote>
+  Nem az a feladatunk, hogy a felnövekvő generációnak meggyőződéseket
+  közvetítsünk. Hozzá kell segítenünk, hogy a saját felfogóképességét használja.
+  Tanuljon meg saját szemével nézni a világban. A mi vélekedéseink és
+  meggyőződéseink csak a mi számunkra érvényesek. Az ifjúság elő tárjuk őket,
+  hogy azt mondjuk: Így látjuk mi a világot. Nézzétek most már meg ti is,
+  milyennek mutatja magát nektek. Képességeket ébresszünk fel, és ne
+  meggyőződéseket közvetítsünk. Ne a mi igazságainkban higgyen az ifjúság, hanem
+  a mi személyiségünkben. Azt vegyék észre a felnövekvők, hogy mi keresők
+  vagyunk. És őket is a keresők útjára kell vezetnünk.
+</quote>
+
+<cards>
+  <card title="Baba-mama délutánok" id="baba-mama">
+    Óvodánkban minden év októberétől **baba-mama délutánokat** szervezünk heti
+    rendszerességgel, a két éves kort betöltött gyermekek és szüleik számára.
+    Várunk minden kedves érdeklődőt! Kérjük, telefonon (**Keszthelyi Terézia:
+    [+36 20 572-1091](tel:+36205721091)**) vagy e-mailben
+    (**[tswovoda@gmail.com](mailto:tswovoda@gmail.com)**) érdeklődjenek a
+    tudnivalókról, a délutáni órákban.
+  </card>
+  <card title="Szülői délutánok" id="szuloknek">
+    Lehetőség nyílik a szülők számára **beszélgető délutánokon** való
+    részvételre, amelyek során ismerkedhetnek a waldorf-pedagógia
+    gyermekszemléletével. Jelentkezni lehet reggel 7h és fél 9h között, valamint
+    délután 13h és fél 14h között az óvoda telefonszámán:
+    **[+36-1-326-2057](tel:+3613262057)**
+  </card>
+</cards>
+
+<content-block title="Óvodai jelentkezés" id="felveteli">
+  Óvodánk a „Waldorf Óvodapedagógiai Program" alapján elkészített Helyi
+  Pedagógiai Program alapján működik, látja el nevelési feladatát. Minden évben
+  csak szabad férőhelyek esetén tudunk jelentkezéseket fogadni. Érdeklődők
+  jelentkezését váruk az alábbu telefonszámokon a hét minden napján **13 és 16
+  óra között:**<br />
+  **[+36-1-326-2057](tel:+3613262057)**<br />
+  **[+36-20-572-1091](tel:+36205721091)** <br />
+  illetve e-mailben: **[tswovoda@gmail.com](mailto:tswovoda@gmail.com)**
+</content-block>
+
+<doc-list></doc-list>
+
+<contact-info title="Elérhetőségeink" id="elerhetoseg">
+  **Óvoda** 1026 Budapest, Guyon Richárd u. 3.
+  **[+36-1-326-2057](tel:+3613262057)**
+  **[tswovoda@gmail.com](mailto:tswovoda@gmail.com)** **Óvodavezető** Füle Erika
+  **Fenntartó** Török Sándor Waldorf-pedagógiai Alapítvány 1028 Budapest,
+  Kossuth Lajos utca 15–17.
+</contact-info>
+
+<page-footer></page-footer>

@@ -4,12 +4,6 @@ node_modules/
 # Eleventy build output
 _site/
 
-# Generated client bundle (built from src/js/gallery.client.jsx on each build)
-src/js/gallery.js
-
-# Merged from src/_components/*.css on each build
-src/css/components.css
-
 # Environment & secrets
 .env
 .env.*
@@ -27,9 +21,13 @@ Thumbs.db
 # Editors
 .idea/
 *.swp
-*.swo
+*.swp
 *~
 
 # Optional local tooling
 .cache/
 .eleventy-cache/
+
+# Decap CMS local uploads (keep folder)
+src/images/uploads/*
+!src/images/uploads/.gitkeep

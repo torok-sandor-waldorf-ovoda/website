@@ -1,0 +1,24 @@
+<style>
+  .c-content-block {
+    width: 100%;
+    padding: var(--sp-6);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    justify-content: flex-start;
+    gap: var(--sp-7);
+  }
+
+  @media (max-width: 768px) {
+    .c-content-block {
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+  }
+</style>
+
+<section webc:root="override" :id="id" class="c-content-block">
+  <h2 :class="`heading-${headingSize || 'lg'}`" @text="title"></h2>
+  <div class="c-content-block__content">
+    <template webc:type="11ty" 11ty:type="liquid,md">{{ slots.text.default }}</template>
+  </div>
+</section>

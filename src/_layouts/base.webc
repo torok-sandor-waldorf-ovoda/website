@@ -1,0 +1,23 @@
+<!doctype html>
+<html :lang="site.lang" webc:root="override">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title @text="`${title} | ${site.siteName}`"></title>
+    <meta
+      name="description"
+      :content="description ? description : site.siteName"
+    />
+    <link
+      rel="stylesheet"
+      :href="url(`/css/styles.css?v=${site.version}`)"
+      webc:keep
+    />
+  </head>
+  <body class="l-body">
+    <main class="l-main mdx-content" @raw="content"></main>
+    <style @raw="getBundle('css')" webc:keep></style>
+    <script type="module" :src="url('/js/intro.js')" webc:keep></script>
+    <script type="module" :src="url('/js/nav.js')" webc:keep></script>
+  </body>
+</html>

@@ -1,0 +1,871 @@
+<script webc:setup>
+  const galleryDir = dir || "images/gallery";
+  const visibleCount = Number(visible) || 4;
+  const images = listGalleryImages(galleryDir);
+  const imagesJson = JSON.stringify(images);
+</script>
+
+<style>
+  .c-gallery {
+    width: 140%;
+    max-width: 100vw;
+    position: relative;
+    padding: 3rem 5rem;
+    overflow: clip;
+    --thumb-count: 4;
+  }
+
+  @media (max-width: 768px) {
+    .c-gallery {
+      margin: -2rem 0 -5rem;
+    }
+  }
+
+  .c-gallery__stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-gallery__thumb {
+    --thumb-width: calc(100% / var(--thumb-count, 4) * 1.25);
+    min-width: 180px;
+    flex: 0 0 var(--thumb-width);
+    margin: 0 -3vw;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    position: relative;
+    z-index: calc(var(--thumb-index, 0) + 1);
+    transform: rotate(var(--rotation, 0deg));
+    animation: gallery-thumb-enter 0.6s var(--ease-out-expo) both;
+    animation-delay: var(--delay, 0s);
+    transition: z-index 0s;
+  }
+
+  .c-gallery__thumb:nth-child(1) {
+    --thumb-index: 0;
+    --rotation: -6deg;
+    --delay: 0.04s;
+  }
+  .c-gallery__thumb:nth-child(2) {
+    --thumb-index: 1;
+    --rotation: 12deg;
+    --delay: 0.11s;
+  }
+  .c-gallery__thumb:nth-child(3) {
+    --thumb-index: 2;
+    --rotation: -5deg;
+    --delay: 0.18s;
+  }
+  .c-gallery__thumb:nth-child(4) {
+    --thumb-index: 3;
+    --rotation: 9deg;
+    --delay: 0.25s;
+  }
+
+  .c-gallery__thumb:first-child {
+    margin-left: 0;
+  }
+
+  .c-gallery__thumb:hover,
+  .c-gallery__thumb:focus-visible {
+    z-index: 20;
+    outline: none;
+  }
+
+  .c-gallery__thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 0.375rem solid #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 24px rgba(78, 40, 24, 0.18);
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .c-gallery__thumb:hover img,
+  .c-gallery__thumb:focus-visible img {
+    transform: scale(1.1) rotate(var(--hover-rotate, 0deg));
+  }
+
+  @keyframes gallery-thumb-enter {
+    from {
+      opacity: 0;
+      transform: rotate(var(--rotation, 0deg)) scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(var(--rotation, 0deg)) scale(1);
+    }
+  }
+
+  .c-gallery-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--sp-6);
+    pointer-events: none;
+  }
+
+  .c-gallery-overlay > * {
+    pointer-events: auto;
+  }
+
+  .c-gallery-overlay__backdrop {
+    position: fixed;
+    inset: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(12, 8, 6, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .c-gallery-overlay__close {
+    position: fixed;
+    top: var(--sp-5);
+    right: var(--sp-5);
+    z-index: 1002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .c-gallery-overlay__close:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: scale(1.08);
+  }
+
+  .c-gallery-overlay__main {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sp-4);
+    width: 100%;
+    align-self: center;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .c-gallery-overlay__viewport {
+    width: 100vw;
+    display: flex;
+    gap: 2vw;
+    align-items: flex-end;
+    justify-content: flex-start;
+    max-width: 100%;
+    padding: 0 10vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .c-gallery-overlay__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .c-gallery-overlay__slide {
+    flex-shrink: 0;
+    width: 80vw;
+    height: 90%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .c-gallery-overlay__slide img {
+    display: block;
+    height: 100%;
+    max-height: 42rem;
+    width: auto;
+    object-fit: cover;
+    margin: 0 auto;
+    user-select: none;
+    border-radius: var(--radius-lg);
+    -webkit-user-drag: none;
+  }
+
+  .c-gallery-overlay__footer {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--sp-4);
+  }
+
+  .c-gallery-overlay__controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .c-gallery-overlay__stepper-host {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .c-gallery-overlay__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .c-gallery-overlay__btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .c-gallery-overlay__btn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+  }
+
+  .gallery-stepper {
+    --step-dot-size: 8px;
+    --step-active-width: 24px;
+    --step-gap: 6px;
+    --step-duration: 500ms;
+    --step-easing: cubic-bezier(0.215, 0.61, 0.355, 1);
+    --step-bg: rgba(0, 0, 0, 0.12);
+    --step-active-bg: rgba(0, 0, 0, 0.8);
+    --step-fill-bg: rgba(255, 255, 255, 0.45);
+    --step-container-bg: rgba(0, 0, 0, 0.04);
+    --step-container-radius: 999px;
+    --step-container-border: rgba(0, 0, 0, 0.06);
+    padding: 6px 10px;
+    background: var(--step-container-bg);
+    border-radius: var(--step-container-radius);
+    border: 1px solid var(--step-container-border);
+    overflow: hidden;
+  }
+
+  .gallery-stepper__viewport {
+    display: flex;
+    align-items: center;
+    gap: var(--step-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .gallery-stepper__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-stepper__step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--step-active-width);
+    height: var(--step-dot-size);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .gallery-stepper__step::before {
+    content: "";
+    width: var(--step-dot-size);
+    height: var(--step-dot-size);
+    border-radius: 999px;
+    background: var(--step-bg);
+    overflow: hidden;
+    transition:
+      width var(--step-duration) var(--step-easing),
+      background var(--step-duration) var(--step-easing);
+  }
+
+  .gallery-stepper__step:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+    outline-offset: 2px;
+  }
+
+  .gallery-stepper__step--active::before {
+    width: var(--step-active-width);
+    background: var(--step-active-bg);
+  }
+
+  .gallery-stepper__step::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: var(--step-dot-size);
+    border-radius: 999px;
+    background: var(--step-fill-bg);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+
+  .gallery-stepper__step--filling::after {
+    width: var(--step-active-width);
+    transition: width var(--step-fill-duration, 3000ms) linear;
+  }
+
+  .c-gallery-overlay .c-gallery-overlay__stepper {
+    --step-bg: rgba(255, 255, 255, 0.2);
+    --step-active-bg: rgba(255, 255, 255, 1);
+    --step-fill-bg: rgba(255, 255, 255, 0.35);
+    --step-container-bg: rgba(255, 255, 255, 0.08);
+    --step-container-border: rgba(255, 255, 255, 0.14);
+    min-height: 2rem;
+    padding: 0.75rem 0.625rem;
+    box-sizing: border-box;
+  }
+
+  .c-gallery-overlay[data-playing="true"] .c-gallery-overlay__stepper {
+    --step-active-bg: rgba(255, 255, 255, 0.2);
+    --step-fill-bg: rgba(255, 255, 255, 1);
+  }
+
+  @media (max-width: 480px) {
+    .c-gallery-overlay {
+      padding-block: var(--sp-4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .c-gallery__thumb,
+    .c-gallery-overlay__close,
+    .c-gallery-overlay__btn,
+    .c-gallery-overlay__slide img,
+    .gallery-stepper__step::before {
+      transition-duration: 0ms !important;
+    }
+
+    .c-gallery__thumb img {
+      transition: none;
+    }
+
+    .gallery-stepper__step--filling::after {
+      transition-duration: 0ms !important;
+    }
+  }
+</style>
+
+<script webc:keep>
+  const STEP_DURATION = 5000;
+  const STEP_DOT = 8;
+  const STEP_ACTIVE = 24;
+  const STEP_GAP = 6;
+
+  function readActiveIndex(viewport, count) {
+    const slides = viewport.querySelectorAll(".c-gallery-overlay__slide");
+    if (!slides.length) return 0;
+
+    const center = viewport.scrollLeft + viewport.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+
+    slides.forEach((slide, i) => {
+      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+      const dist = Math.abs(slideCenter - center);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+
+    return Math.min(count - 1, best);
+  }
+
+  function scrollLeftToCenter(viewport, el) {
+    const viewportRect = viewport.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const elCenter =
+      elRect.left - viewportRect.left + viewport.scrollLeft + elRect.width / 2;
+    const target = elCenter - viewport.clientWidth / 2;
+    const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    return Math.max(0, Math.min(target, max));
+  }
+
+  function visibleWindowWidth(maxVisible) {
+    return maxVisible * STEP_ACTIVE + (maxVisible - 1) * STEP_GAP;
+  }
+
+  function iconClose() {
+    return `<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>`;
+  }
+
+  function iconChevron(direction) {
+    const path =
+      direction === "prev" ? "M14.5 18L8.5 12L14.5 6" : "M9.5 18L15.5 12L9.5 6";
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="${path}" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>`;
+  }
+
+  function iconPlay() {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M11.1967 2.71828C8.53683 0.970354 5 2.8783 5 6.0611V17.9387C5 21.1215 8.53684 23.0294 11.1967 21.2815L20.234 15.3427C22.6384 13.7627 22.6384 10.2371 20.234 8.65706L11.1967 2.71828Z" fill="white"></path></svg>`;
+  }
+
+  function iconPause() {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6C4 4.34315 5.34315 3 7 3C8.65685 3 10 4.34315 10 6V18C10 19.6569 8.65685 21 7 21C5.34315 21 4 19.6569 4 18V6Z" fill="white"></path><path d="M14 6C14 4.34315 15.3431 3 17 3C18.6569 3 20 4.34315 20 6V18C20 19.6569 18.6569 21 17 21C15.3431 21 14 19.6569 14 18V6Z" fill="white"></path></svg>`;
+  }
+
+  function createAutoPlay(onStepChange, count) {
+    let playing = false;
+    let timer = null;
+
+    function clearTimer() {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+    }
+
+    function schedule(active) {
+      clearTimer();
+      if (!playing) return;
+      timer = setTimeout(() => {
+        const next = active < count - 1 ? active + 1 : 0;
+        onStepChange(next);
+      }, STEP_DURATION);
+    }
+
+    return {
+      get playing() {
+        return playing;
+      },
+      toggle() {
+        playing = !playing;
+      },
+      schedule,
+      clear: clearTimer,
+    };
+  }
+
+  function restartFillAnimation(stepEl, duration) {
+    stepEl.classList.remove("gallery-stepper__step--filling");
+    stepEl.style.setProperty("--step-fill-duration", `${duration}ms`);
+    const fill = stepEl;
+    void fill.offsetWidth;
+    requestAnimationFrame(() => {
+      fill.classList.add("gallery-stepper__step--filling");
+    });
+  }
+
+  class GalleryStepper {
+    constructor(host, { count, maxVisible, onStepClick, reduceMotion }) {
+      this.count = count;
+      this.maxVisible = maxVisible ?? null;
+      this.reduceMotion = reduceMotion;
+      this.isFirstScroll = true;
+      this.steps = [];
+
+      this.shell = document.createElement("div");
+      this.shell.className = "gallery-stepper c-gallery-overlay__stepper";
+
+      this.viewport = document.createElement("div");
+      this.viewport.className = "gallery-stepper__viewport";
+      this.viewport.setAttribute("role", "tablist");
+      this.viewport.setAttribute("aria-label", "Progress steps");
+
+      for (let i = 0; i < count; i++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "gallery-stepper__step";
+        btn.dataset.index = String(i);
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-label", `Step ${i + 1}`);
+        btn.addEventListener("click", () => onStepClick(i));
+        this.steps.push(btn);
+        this.viewport.appendChild(btn);
+      }
+
+      this.shell.appendChild(this.viewport);
+      host.appendChild(this.shell);
+
+      this.onViewportResize = () => this.scrollToActive(false);
+      this.resizeObserver = new ResizeObserver(this.onViewportResize);
+      this.resizeObserver.observe(this.viewport);
+    }
+
+    setShellContentWidth(contentWidth) {
+      this.shell.style.width = `${contentWidth}px`;
+      void this.shell.offsetWidth;
+
+      const chrome = this.shell.offsetWidth - this.shell.clientWidth;
+      if (chrome > 0) {
+        this.shell.style.width = `${contentWidth + chrome}px`;
+      }
+    }
+
+    scrollToActive(smooth) {
+      const step = this.steps[this.active];
+      if (!step || !this.viewport.clientWidth) return;
+
+      this.viewport.scrollTo({
+        left: scrollLeftToCenter(this.viewport, step),
+        behavior: smooth && !this.reduceMotion ? "smooth" : "auto",
+      });
+    }
+
+    update({ active, filling, source }) {
+      this.active = active;
+
+      this.steps.forEach((btn, i) => {
+        const isActive = i === active;
+        btn.classList.toggle("gallery-stepper__step--active", isActive);
+        btn.classList.remove("gallery-stepper__step--filling");
+        btn.setAttribute("aria-selected", String(isActive));
+        btn.tabIndex = isActive ? 0 : -1;
+      });
+
+      const needsWindow =
+        this.maxVisible != null && this.count > this.maxVisible;
+      if (needsWindow) {
+        this.setShellContentWidth(visibleWindowWidth(this.maxVisible));
+      } else {
+        this.shell.style.width = "";
+      }
+
+      void this.viewport.offsetWidth;
+
+      const smooth = source === "control" && !this.isFirstScroll;
+      if (this.isFirstScroll) this.isFirstScroll = false;
+
+      this.scrollToActive(smooth);
+      requestAnimationFrame(() => {
+        void this.viewport.offsetWidth;
+        this.scrollToActive(smooth);
+      });
+
+      const activeStep = this.steps[active];
+      if (filling && activeStep) {
+        restartFillAnimation(activeStep, STEP_DURATION);
+      }
+    }
+  }
+
+  function openGallery(images, startIndex) {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    let active = startIndex;
+    let isFirstScroll = true;
+    let pendingControlScroll = false;
+
+    const mount = document.createElement("div");
+    mount.className = "c-gallery-overlay-root";
+    document.body.appendChild(mount);
+
+    const overlay = document.createElement("div");
+    overlay.className = "c-gallery-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Galéria");
+
+    const backdrop = document.createElement("button");
+    backdrop.type = "button";
+    backdrop.className = "c-gallery-overlay__backdrop";
+    backdrop.setAttribute("aria-label", "Bezárás");
+
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "c-gallery-overlay__close";
+    closeBtn.setAttribute("aria-label", "Bezárás");
+    closeBtn.innerHTML = iconClose();
+
+    const main = document.createElement("div");
+    main.className = "c-gallery-overlay__main";
+
+    const viewport = document.createElement("div");
+    viewport.className = "c-gallery-overlay__viewport";
+    viewport.setAttribute("aria-label", "Képek");
+
+    const slides = images.map((src, i) => {
+      const figure = document.createElement("figure");
+      figure.className = "c-gallery-overlay__slide";
+      figure.dataset.index = String(i);
+
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = "";
+      image.loading = i === startIndex ? "eager" : "lazy";
+      image.decoding = "async";
+      image.draggable = false;
+
+      figure.appendChild(image);
+      viewport.appendChild(figure);
+      return figure;
+    });
+
+    main.appendChild(viewport);
+
+    const footer = document.createElement("div");
+    footer.className = "c-gallery-overlay__footer";
+
+    const controls = document.createElement("div");
+    controls.className = "c-gallery-overlay__controls";
+
+    const playBtn = document.createElement("button");
+    playBtn.type = "button";
+    playBtn.className = "c-gallery-overlay__btn c-gallery-overlay__btn--play";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "c-gallery-overlay__btn c-gallery-overlay__btn--prev";
+    prevBtn.setAttribute("aria-label", "Előző kép");
+    prevBtn.innerHTML = iconChevron("prev");
+
+    const stepperHost = document.createElement("div");
+    stepperHost.className = "c-gallery-overlay__stepper-host";
+
+    const nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "c-gallery-overlay__btn c-gallery-overlay__btn--next";
+    nextBtn.setAttribute("aria-label", "Következő kép");
+    nextBtn.innerHTML = iconChevron("next");
+
+    controls.append(playBtn, prevBtn, stepperHost, nextBtn);
+    footer.appendChild(controls);
+
+    overlay.append(backdrop, closeBtn, main, footer);
+    mount.appendChild(overlay);
+
+    const autoplay = createAutoPlay(
+      (next) => setActive(next, "control"),
+      images.length,
+    );
+
+    const stepper = new GalleryStepper(stepperHost, {
+      count: images.length,
+      maxVisible: images.length > 9 ? 9 : null,
+      onStepClick: (index) => setActive(index, "control"),
+      reduceMotion,
+    });
+
+    function scrollToActive(smooth) {
+      const slide = slides[active];
+      if (!slide) return;
+
+      pendingControlScroll = true;
+      viewport.scrollTo({
+        left: scrollLeftToCenter(viewport, slide),
+        behavior: smooth && !reduceMotion ? "smooth" : "auto",
+      });
+    }
+
+    function setActive(next, source) {
+      active = typeof next === "function" ? next(active) : next;
+      update(source);
+    }
+
+    function update(source) {
+      slides.forEach((slide, i) => {
+        const isActive = i === active;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+        slide.querySelector("img").loading = isActive ? "eager" : "lazy";
+      });
+
+      overlay.dataset.playing = String(autoplay.playing);
+      playBtn.setAttribute(
+        "aria-label",
+        autoplay.playing ? "Diavetítés szüneteltetése" : "Diavetítés indítása",
+      );
+      playBtn.setAttribute("aria-pressed", String(autoplay.playing));
+      playBtn.innerHTML = autoplay.playing ? iconPause() : iconPlay();
+
+      stepper.update({ active, filling: autoplay.playing, source });
+
+      if (source !== "user") {
+        const smooth = source === "control" && !isFirstScroll;
+        if (isFirstScroll) isFirstScroll = false;
+        scrollToActive(smooth);
+      }
+
+      autoplay.clear();
+      if (autoplay.playing) autoplay.schedule(active);
+    }
+
+    function goPrev() {
+      setActive((i) => (i - 1 + images.length) % images.length, "control");
+    }
+
+    function goNext() {
+      setActive((i) => (i + 1) % images.length, "control");
+    }
+
+    function close() {
+      autoplay.clear();
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      viewport.removeEventListener("scrollend", onScrollEnd);
+      viewport.removeEventListener("scroll", onScroll);
+      mount.remove();
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    }
+
+    function syncActiveFromScroll() {
+      if (pendingControlScroll) return;
+      const index = readActiveIndex(viewport, images.length);
+      if (index !== active) setActive(index, "user");
+    }
+
+    function onScrollEnd() {
+      pendingControlScroll = false;
+      syncActiveFromScroll();
+    }
+
+    let scrollTimer;
+    function onScroll() {
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(() => {
+        pendingControlScroll = false;
+        syncActiveFromScroll();
+      }, 100);
+    }
+
+    backdrop.addEventListener("click", close);
+    closeBtn.addEventListener("click", close);
+    playBtn.addEventListener("click", () => {
+      autoplay.toggle();
+      update("control");
+    });
+    prevBtn.addEventListener("click", goPrev);
+    nextBtn.addEventListener("click", goNext);
+
+    viewport.addEventListener("scrollend", onScrollEnd);
+    viewport.addEventListener("scroll", onScroll, { passive: true });
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+
+    update("init");
+  }
+
+  function initGalleries() {
+    document.querySelectorAll("[data-gallery]").forEach((el) => {
+      if (el.dataset.galleryBound) return;
+      el.dataset.galleryBound = "true";
+
+      let images;
+      try {
+        images = JSON.parse(el.dataset.galleryImages);
+      } catch {
+        return;
+      }
+
+      if (!images.length) return;
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const hoverRotateRange = 14;
+
+      el.querySelectorAll(".c-gallery__thumb").forEach((btn) => {
+        const pickHoverRotate = () => {
+          if (reduceMotion) {
+            btn.style.removeProperty("--hover-rotate");
+            return;
+          }
+          const deg = (Math.random() * 2 - 1) * hoverRotateRange;
+          btn.style.setProperty("--hover-rotate", `${deg.toFixed(1)}deg`);
+        };
+
+        const clearHoverRotate = () =>
+          btn.style.removeProperty("--hover-rotate");
+
+        btn.addEventListener("mouseenter", pickHoverRotate);
+        btn.addEventListener("mouseleave", clearHoverRotate);
+        btn.addEventListener("focus", pickHoverRotate);
+        btn.addEventListener("blur", clearHoverRotate);
+
+        btn.addEventListener("click", () => {
+          const index = Number(btn.dataset.index) || 0;
+          openGallery(images, index);
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGalleries);
+  } else {
+    initGalleries();
+  }
+</script>
+
+<div
+  webc:if="images.length"
+  webc:root="override"
+  class="c-gallery"
+  data-gallery
+  :data-gallery-images="imagesJson"
+  :style="`--thumb-count: ${visibleCount}`"
+>
+  <div class="c-gallery__stack" role="group" aria-label="Galéria">
+    <button
+      webc:for="(src, i) of images"
+      webc:if="i < visibleCount"
+      type="button"
+      class="c-gallery__thumb"
+      :data-index="i"
+      :aria-label="`${i + 1}. kép megnyitása`"
+    >
+      <img
+        :src="url(src)"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        draggable="false"
+      />
+    </button>
+  </div>
+</div>
