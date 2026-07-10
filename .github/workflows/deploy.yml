@@ -27,7 +27,7 @@ jobs:
 
       - name: Install and build
         env:
-          PATH_PREFIX: /
+          PATH_PREFIX: ""
         run: |
           npm ci
           npm run build
