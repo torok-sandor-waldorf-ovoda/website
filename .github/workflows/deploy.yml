@@ -27,7 +27,7 @@ jobs:
 
       - name: Install and build
         env:
-          PATH_PREFIX: /website/
+          PATH_PREFIX: /
         run: |
           npm ci
           npm run build
@@ -38,6 +38,9 @@ jobs:
 
   deploy:
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
