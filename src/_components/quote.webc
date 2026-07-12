@@ -8,13 +8,13 @@
     overflow: hidden;
   }
 
-  .c-quote__video {
+  .c-quote__image {
     width: 31.5%;
     max-width: 280px;
     object-fit: cover;
   }
 
-  .c-quote__video--mobile {
+  .c-quote__image--mobile {
     display: none;
   }
 
@@ -76,16 +76,16 @@
       flex-direction: column-reverse;
     }
 
-    .c-quote__video {
+    .c-quote__image {
       max-width: none;
       width: 100%;
     }
 
-    .c-quote__video--desktop {
+    .c-quote__image--desktop {
       display: none;
     }
 
-    .c-quote__video--mobile {
+    .c-quote__image--mobile {
       display: block;
     }
   }
@@ -116,24 +116,18 @@
       </div>
     </footer>
   </blockquote>
-  <video
-    class="c-quote__video c-quote__video--desktop"
-    autoplay
-    loop
-    muted
-    playsinline
-    preload="auto"
-  >
-    <source src="/images/rudolf-steiner-9-16.mp4" type="video/mp4" />
-  </video>
-  <video
-    class="c-quote__video c-quote__video--mobile"
-    autoplay
-    loop
-    muted
-    playsinline
-    preload="auto"
-  >
-    <source src="/images/rudolf-steiner-mobile.mp4" type="video/mp4" />
-  </video>
+  <img
+    class="c-quote__image c-quote__image--desktop"
+    src="/images/rudolf-steiner-9-16.webp"
+    alt="Rudolf Steiner"
+    width="607"
+    height="1080"
+  />
+  <img
+    class="c-quote__image c-quote__image--mobile"
+    src="/images/rudolf-steiner-mobile.webp"
+    alt="Rudolf Steiner"
+    width="1470"
+    height="630"
+  />
 </section>
