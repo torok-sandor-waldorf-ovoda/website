@@ -120,14 +120,10 @@
     class="c-quote__image c-quote__image--desktop"
     src="/images/rudolf-steiner-9-16.webp"
     alt="Rudolf Steiner"
-    width="607"
-    height="1080"
   />
   <img
     class="c-quote__image c-quote__image--mobile"
     src="/images/rudolf-steiner-mobile.webp"
     alt="Rudolf Steiner"
-    width="1470"
-    height="630"
   />
 </section>

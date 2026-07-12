@@ -230,10 +230,8 @@
   }
 
   .c-gallery-overlay__stepper-host {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
-    display: flex;
-    justify-content: center;
   }
 
   .c-gallery-overlay__btn {
@@ -263,22 +261,23 @@
     outline-offset: 2px;
   }
 
-  .gallery-stepper {
-    --step-dot-size: 8px;
-    --step-active-width: 24px;
+  .c-gallery-overlay__stepper {
+    --step-dot: 8px;
+    --step-active: 24px;
     --step-gap: 6px;
-    --step-duration: 500ms;
-    --step-easing: cubic-bezier(0.215, 0.61, 0.355, 1);
-    --step-bg: rgba(0, 0, 0, 0.12);
-    --step-active-bg: rgba(0, 0, 0, 0.8);
-    --step-fill-bg: rgba(255, 255, 255, 0.45);
-    --step-container-bg: rgba(0, 0, 0, 0.04);
-    --step-container-radius: 999px;
-    --step-container-border: rgba(0, 0, 0, 0.06);
-    padding: 6px 10px;
-    background: var(--step-container-bg);
-    border-radius: var(--step-container-radius);
-    border: 1px solid var(--step-container-border);
+    --step-visible: 8;
+    --step-inset: 0.625rem;
+    --step-track: calc(
+      (var(--step-visible) - 1) * (var(--step-dot) + var(--step-gap)) +
+        var(--step-active)
+    );
+    width: calc(var(--step-track) + var(--step-inset) * 2 + 2px);
+    max-width: 100%;
+    height: 2rem;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
     overflow: hidden;
   }
 
@@ -286,11 +285,14 @@
     display: flex;
     align-items: center;
     gap: var(--step-gap);
+    height: 100%;
+    padding-inline: var(--step-inset);
+    box-sizing: border-box;
     overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
+    overflow-y: visible;
+    scroll-behavior: smooth;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   .gallery-stepper__viewport::-webkit-scrollbar {
@@ -299,73 +301,45 @@
 
   .gallery-stepper__step {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--step-active-width);
-    height: var(--step-dot-size);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
     flex-shrink: 0;
-    overflow: visible;
+    width: var(--step-dot);
+    height: var(--step-dot);
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    overflow: hidden;
+    transition: width 0.4s ease;
   }
 
-  .gallery-stepper__step::before {
-    content: "";
-    width: var(--step-dot-size);
-    height: var(--step-dot-size);
-    border-radius: 999px;
-    background: var(--step-bg);
-    overflow: hidden;
-    transition:
-      width var(--step-duration) var(--step-easing),
-      background var(--step-duration) var(--step-easing);
+  .gallery-stepper__step--active {
+    width: var(--step-active);
+    background: rgba(255, 255, 255, 1);
   }
 
   .gallery-stepper__step:focus-visible {
-    outline: 2px solid rgba(0, 0, 0, 0.3);
+    outline: 2px solid rgba(255, 255, 255, 0.6);
     outline-offset: 2px;
-  }
-
-  .gallery-stepper__step--active::before {
-    width: var(--step-active-width);
-    background: var(--step-active-bg);
   }
 
   .gallery-stepper__step::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
+    inset: 0 auto 0 0;
     width: 0;
-    height: var(--step-dot-size);
-    border-radius: 999px;
-    background: var(--step-fill-bg);
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 1);
     pointer-events: none;
-    transform: translate(-50%, -50%);
   }
 
   .gallery-stepper__step--filling::after {
-    width: var(--step-active-width);
+    width: 100%;
     transition: width var(--step-fill-duration, 3000ms) linear;
   }
 
-  .c-gallery-overlay .c-gallery-overlay__stepper {
-    --step-bg: rgba(255, 255, 255, 0.2);
-    --step-active-bg: rgba(255, 255, 255, 1);
-    --step-fill-bg: rgba(255, 255, 255, 0.35);
-    --step-container-bg: rgba(255, 255, 255, 0.08);
-    --step-container-border: rgba(255, 255, 255, 0.14);
-    min-height: 2rem;
-    padding: 0.75rem 0.625rem;
-    box-sizing: border-box;
-  }
-
-  .c-gallery-overlay[data-playing="true"] .c-gallery-overlay__stepper {
-    --step-active-bg: rgba(255, 255, 255, 0.2);
-    --step-fill-bg: rgba(255, 255, 255, 1);
+  .c-gallery-overlay[data-playing="true"] .gallery-stepper__step--active {
+    background: rgba(255, 255, 255, 0.2);
   }
 
   @media (max-width: 480px) {
@@ -379,8 +353,12 @@
     .c-gallery-overlay__close,
     .c-gallery-overlay__btn,
     .c-gallery-overlay__slide img,
-    .gallery-stepper__step::before {
+    .gallery-stepper__step {
       transition-duration: 0ms !important;
+    }
+
+    .gallery-stepper__viewport {
+      scroll-behavior: auto;
     }
 
     .c-gallery__thumb img {
@@ -395,21 +373,20 @@
 
 <script webc:keep>
   const STEP_DURATION = 5000;
-  const STEP_DOT = 8;
-  const STEP_ACTIVE = 24;
-  const STEP_GAP = 6;
 
   function readActiveIndex(viewport, count) {
     const slides = viewport.querySelectorAll(".c-gallery-overlay__slide");
     if (!slides.length) return 0;
 
-    const center = viewport.scrollLeft + viewport.clientWidth / 2;
+    const viewportRect = viewport.getBoundingClientRect();
+    const viewportCenter = viewportRect.left + viewportRect.width / 2;
     let best = 0;
     let bestDist = Infinity;
 
     slides.forEach((slide, i) => {
-      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-      const dist = Math.abs(slideCenter - center);
+      const rect = slide.getBoundingClientRect();
+      const slideCenter = rect.left + rect.width / 2;
+      const dist = Math.abs(slideCenter - viewportCenter);
       if (dist < bestDist) {
         bestDist = dist;
         best = i;
@@ -419,18 +396,41 @@
     return Math.min(count - 1, best);
   }
 
-  function scrollLeftToCenter(viewport, el) {
-    const viewportRect = viewport.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    const elCenter =
-      elRect.left - viewportRect.left + viewport.scrollLeft + elRect.width / 2;
-    const target = elCenter - viewport.clientWidth / 2;
-    const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
-    return Math.max(0, Math.min(target, max));
+  function scrollIntoViewCenter(el, smooth) {
+    el.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+      behavior: smooth ? "smooth" : "auto",
+    });
   }
 
-  function visibleWindowWidth(maxVisible) {
-    return maxVisible * STEP_ACTIVE + (maxVisible - 1) * STEP_GAP;
+  function scrollStepToCenter(viewport, index, smooth) {
+    const shell = viewport.parentElement;
+    const shellStyle = getComputedStyle(shell);
+    const viewportStyle = getComputedStyle(viewport);
+    const dot = parseFloat(shellStyle.getPropertyValue("--step-dot")) || 8;
+    const active = parseFloat(shellStyle.getPropertyValue("--step-active")) || 24;
+    const gap = parseFloat(shellStyle.getPropertyValue("--step-gap")) || 6;
+    const padL = parseFloat(viewportStyle.paddingLeft) || 0;
+    const padR = parseFloat(viewportStyle.paddingRight) || 0;
+    const count = viewport.children.length;
+
+    let center = padL;
+    for (let i = 0; i < index; i++) center += dot + gap;
+    center += active / 2;
+
+    let total = padL + padR;
+    for (let i = 0; i < count; i++) {
+      total += i === index ? active : dot;
+      if (i < count - 1) total += gap;
+    }
+
+    const target = center - viewport.clientWidth / 2;
+    const max = Math.max(0, total - viewport.clientWidth);
+    viewport.scrollTo({
+      left: Math.max(0, Math.min(target, max)),
+      behavior: smooth ? "smooth" : "auto",
+    });
   }
 
   function iconClose() {
@@ -494,15 +494,14 @@
   }
 
   class GalleryStepper {
-    constructor(host, { count, maxVisible, onStepClick, reduceMotion }) {
+    constructor(host, { count, onStepClick, reduceMotion }) {
       this.count = count;
-      this.maxVisible = maxVisible ?? null;
       this.reduceMotion = reduceMotion;
-      this.isFirstScroll = true;
+      this.active = 0;
       this.steps = [];
 
       this.shell = document.createElement("div");
-      this.shell.className = "gallery-stepper c-gallery-overlay__stepper";
+      this.shell.className = "c-gallery-overlay__stepper";
 
       this.viewport = document.createElement("div");
       this.viewport.className = "gallery-stepper__viewport";
@@ -523,33 +522,22 @@
 
       this.shell.appendChild(this.viewport);
       host.appendChild(this.shell);
-
-      this.onViewportResize = () => this.scrollToActive(false);
-      this.resizeObserver = new ResizeObserver(this.onViewportResize);
-      this.resizeObserver.observe(this.viewport);
-    }
-
-    setShellContentWidth(contentWidth) {
-      this.shell.style.width = `${contentWidth}px`;
-      void this.shell.offsetWidth;
-
-      const chrome = this.shell.offsetWidth - this.shell.clientWidth;
-      if (chrome > 0) {
-        this.shell.style.width = `${contentWidth + chrome}px`;
-      }
     }
 
     scrollToActive(smooth) {
-      const step = this.steps[this.active];
-      if (!step || !this.viewport.clientWidth) return;
-
-      this.viewport.scrollTo({
-        left: scrollLeftToCenter(this.viewport, step),
-        behavior: smooth && !this.reduceMotion ? "smooth" : "auto",
-      });
+      const index = this.active;
+      const behavior = smooth && !this.reduceMotion;
+      const run = () => scrollStepToCenter(this.viewport, index, behavior);
+      if (behavior) {
+        requestAnimationFrame(run);
+      } else {
+        run();
+        requestAnimationFrame(run);
+      }
     }
 
     update({ active, filling, source }) {
+      const prevActive = this.active;
       this.active = active;
 
       this.steps.forEach((btn, i) => {
@@ -560,24 +548,9 @@
         btn.tabIndex = isActive ? 0 : -1;
       });
 
-      const needsWindow =
-        this.maxVisible != null && this.count > this.maxVisible;
-      if (needsWindow) {
-        this.setShellContentWidth(visibleWindowWidth(this.maxVisible));
-      } else {
-        this.shell.style.width = "";
+      if (prevActive !== active || source === "init") {
+        this.scrollToActive(source !== "init");
       }
-
-      void this.viewport.offsetWidth;
-
-      const smooth = source === "control" && !this.isFirstScroll;
-      if (this.isFirstScroll) this.isFirstScroll = false;
-
-      this.scrollToActive(smooth);
-      requestAnimationFrame(() => {
-        void this.viewport.offsetWidth;
-        this.scrollToActive(smooth);
-      });
 
       const activeStep = this.steps[active];
       if (filling && activeStep) {
@@ -594,6 +567,8 @@
     let active = startIndex;
     let isFirstScroll = true;
     let pendingControlScroll = false;
+    let controlScrollTimer;
+    let scrollTimer;
 
     const mount = document.createElement("div");
     mount.className = "c-gallery-overlay-root";
@@ -680,7 +655,6 @@
 
     const stepper = new GalleryStepper(stepperHost, {
       count: images.length,
-      maxVisible: images.length > 9 ? 9 : null,
       onStepClick: (index) => setActive(index, "control"),
       reduceMotion,
     });
@@ -690,10 +664,11 @@
       if (!slide) return;
 
       pendingControlScroll = true;
-      viewport.scrollTo({
-        left: scrollLeftToCenter(viewport, slide),
-        behavior: smooth && !reduceMotion ? "smooth" : "auto",
-      });
+      scrollIntoViewCenter(slide, smooth && !reduceMotion);
+      window.clearTimeout(controlScrollTimer);
+      controlScrollTimer = window.setTimeout(() => {
+        pendingControlScroll = false;
+      }, 400);
     }
 
     function setActive(next, source) {
@@ -739,6 +714,8 @@
 
     function close() {
       autoplay.clear();
+      window.clearTimeout(controlScrollTimer);
+      window.clearTimeout(scrollTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
       viewport.removeEventListener("scrollend", onScrollEnd);
@@ -763,13 +740,12 @@
       syncActiveFromScroll();
     }
 
-    let scrollTimer;
     function onScroll() {
       window.clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(() => {
         pendingControlScroll = false;
         syncActiveFromScroll();
-      }, 100);
+      }, 150);
     }
 
     backdrop.addEventListener("click", close);
@@ -783,6 +759,13 @@
 
     viewport.addEventListener("scrollend", onScrollEnd);
     viewport.addEventListener("scroll", onScroll, { passive: true });
+    viewport.addEventListener(
+      "pointerdown",
+      () => {
+        pendingControlScroll = false;
+      },
+      { passive: true },
+    );
 
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
