@@ -22,17 +22,6 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
-  eleventyConfig.addCollection("gallery", (api) => {
-    return api
-      .getFilteredByGlob("src/gallery/**/*.md")
-      .sort((a, b) => {
-        const ao = a.data.order ?? Number.MAX_SAFE_INTEGER;
-        const bo = b.data.order ?? Number.MAX_SAFE_INTEGER;
-        if (ao !== bo) return ao - bo;
-        return a.fileSlug.localeCompare(b.fileSlug, undefined, { numeric: true });
-      });
-  });
-
   return {
     pathPrefix: process.env.PATH_PREFIX || "",
     dir: {

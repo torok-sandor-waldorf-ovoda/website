@@ -1,8 +1,9 @@
 <script webc:setup>
   const visibleCount = Number(visible) || 4;
-  const items = collections.gallery.map((entry) => ({
-    src: entry.data.image,
-    alt: entry.data.alt || "",
+  const rawItems = $data.gallery.items || [];
+  const items = rawItems.map((item) => ({
+    src: typeof item === "string" ? item : item.src,
+    alt: typeof item === "string" ? "" : item.alt || "",
   }));
   const images = items.map((item) => item.src);
   const imagesJson = JSON.stringify(images);

@@ -103,18 +103,21 @@ collections:
 
   - name: gallery
     label: Galéria
-    label_singular: Kép
-    folder: src/gallery
-    create: true
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
-    summary: "{{image}}"
-    sortable_fields: [order, image]
-    fields:
-      - { label: Kép, name: image, widget: image }
-      - { label: Alt szöveg, name: alt, widget: string, required: false }
-      - { label: Sorrend, name: order, widget: number, value_type: int, required: false }
+    files:
+      - name: gallery
+        label: Képek
+        file: src/_data/gallery.json
+        fields:
+          - label: Képek
+            name: items
+            widget: list
+            label_singular: kép
+            collapsed: true
+            summary: "{{fields.image}}"
+            field:
+              label: Kép
+              name: image
+              widget: image
 
   - name: blog
     label: Hírek
