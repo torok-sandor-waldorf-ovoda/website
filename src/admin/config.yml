@@ -45,7 +45,77 @@ slug:
   encoding: ascii
   clean_accents: true
 
+editor:
+  preview: false
+
 collections:
+  - name: site
+    label: Oldal tartalom
+    files:
+      - name: homepage
+        label: Főoldal
+        file: src/_data/homepage.json
+        fields:
+          - label: Köszöntő
+            name: intro
+            widget: object
+            fields:
+              - { label: Cím, name: title, widget: string }
+              - { label: Rövid szöveg, name: teaser, widget: markdown }
+              - { label: További szöveg, name: more, widget: markdown }
+              - { label: „Tovább olvasok” felirat, name: toggleLabel, widget: string, required: false, default: "Tovább olvasok" }
+          - label: Pedagógiai hitvallás
+            name: quote
+            widget: object
+            fields:
+              - { label: Idézet szövege, name: text, widget: markdown }
+          - label: Kártyák
+            name: cards
+            widget: list
+            min: 2
+            max: 2
+            fields:
+              - { label: Cím, name: title, widget: string }
+              - { label: Tartalom, name: body, widget: markdown }
+          - label: Óvodai jelentkezés
+            name: application
+            widget: object
+            fields:
+              - { label: Cím, name: title, widget: string }
+              - { label: Tartalom, name: body, widget: markdown }
+          - label: Elérhetőségek
+            name: contact
+            widget: object
+            fields:
+              - { label: Cím, name: title, widget: string }
+              - { label: Tartalom, name: body, widget: markdown }
+
+      - name: documents
+        label: Dokumentumok
+        file: src/_data/documents.json
+        fields:
+          - label: Dokumentumok
+            name: items
+            widget: list
+            fields:
+              - { label: Fájl útvonal, name: href, widget: string, hint: "Pl. /dokumentumok/fajl.pdf" }
+              - { label: Megnevezés, name: label, widget: string }
+
+  - name: gallery
+    label: Galéria
+    label_singular: Kép
+    folder: src/gallery
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{image}}"
+    sortable_fields: [order, image]
+    fields:
+      - { label: Kép, name: image, widget: image }
+      - { label: Alt szöveg, name: alt, widget: string, required: false }
+      - { label: Sorrend, name: order, widget: number, value_type: int, required: false }
+
   - name: blog
     label: Hírek
     label_singular: Bejegyzés
@@ -60,33 +130,3 @@ collections:
       - { label: Dátum, name: date, widget: datetime }
       - { label: Layout, name: layout, widget: hidden, default: post.webc }
       - { label: Tartalom, name: body, widget: markdown }
-    editor:
-      preview: false
-
-  - name: documents
-    label: Dokumentumok
-    files:
-      - name: documents
-        label: Dokumentumlista
-        file: src/_data/documents.json
-        fields:
-          - label: Dokumentumok
-            name: items
-            widget: list
-            fields:
-              - { label: Fájl útvonal, name: href, widget: string, hint: "Pl. /dokumentumok/fajl.pdf" }
-              - { label: Megnevezés, name: label, widget: string }
-
-  - name: navigation
-    label: Navigáció
-    files:
-      - name: nav
-        label: Főmenü
-        file: src/_data/nav.json
-        fields:
-          - label: Menüpontok
-            name: items
-            widget: list
-            fields:
-              - { label: Felirat, name: label, widget: string }
-              - { label: URL, name: url, widget: string }

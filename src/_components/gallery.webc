@@ -1,7 +1,10 @@
 <script webc:setup>
-  const galleryDir = dir || "images/gallery";
   const visibleCount = Number(visible) || 4;
-  const images = listGalleryImages(galleryDir);
+  const items = collections.gallery.map((entry) => ({
+    src: entry.data.image,
+    alt: entry.data.alt || "",
+  }));
+  const images = items.map((item) => item.src);
   const imagesJson = JSON.stringify(images);
 </script>
 
@@ -832,7 +835,7 @@
 </script>
 
 <div
-  webc:if="images.length"
+  webc:if="items.length"
   webc:root="override"
   class="c-gallery"
   data-gallery
@@ -841,7 +844,7 @@
 >
   <div class="c-gallery__stack" role="group" aria-label="Galéria">
     <button
-      webc:for="(src, i) of images"
+      webc:for="(item, i) of items"
       webc:if="i < visibleCount"
       type="button"
       class="c-gallery__thumb"
@@ -849,8 +852,8 @@
       :aria-label="`${i + 1}. kép megnyitása`"
     >
       <img
-        :src="url(src)"
-        alt=""
+        :src="url(item.src)"
+        :alt="item.alt || ''"
         loading="lazy"
         decoding="async"
         draggable="false"

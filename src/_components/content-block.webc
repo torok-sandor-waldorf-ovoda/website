@@ -19,6 +19,6 @@
 <section webc:root="override" :id="id" class="c-content-block">
   <h2 :class="`heading-${headingSize || 'lg'}`" @text="title"></h2>
   <div class="c-content-block__content">
-    <template webc:type="11ty" 11ty:type="liquid,md">{{ slots.text.default }}</template>
+    <slot name="text"></slot>
   </div>
 </section>

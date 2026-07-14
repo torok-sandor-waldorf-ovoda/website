@@ -95,7 +95,7 @@
   <blockquote class="c-quote__content">
     <h2 class="c-quote__title">Pedagógiai hitvallásunk</h2>
     <div class="c-quote__text">
-      <template webc:type="11ty" 11ty:type="liquid,md">{{ slots.text.default }}</template>
+      <slot name="text"></slot>
     </div>
     <footer class="c-quote__attribution">
       <img

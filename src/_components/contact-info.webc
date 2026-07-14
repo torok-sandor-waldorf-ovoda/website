@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: row;
     gap: var(--sp-7);
+    justify-content: space-between;
   }
 
   .c-contact__content p {
@@ -38,6 +39,6 @@
 <div webc:root="override" :id="id" class="c-contact">
   <h2 class="c-contact__title" @text="title"></h2>
   <div class="c-contact__content">
-    <template webc:type="11ty" 11ty:type="liquid,md">{{ slots.text.default }}</template>
+    <slot name="text"></slot>
   </div>
 </div>

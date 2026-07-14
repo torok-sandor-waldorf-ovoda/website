@@ -1,26 +1,9 @@
 import pluginWebc from "@11ty/eleventy-plugin-webc";
-import fs from "node:fs";
-import path from "node:path";
-
-const IMAGE_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
-
-function listGalleryImages(dir) {
-  const absDir = path.join("src", dir);
-  if (!fs.existsSync(absDir)) return [];
-
-  return fs
-    .readdirSync(absDir)
-    .filter((f) => IMAGE_EXT.test(f))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map((f) => `/${dir}/${f}`);
-}
 
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginWebc, {
     components: "src/_components/**/*.webc",
   });
-
-  eleventyConfig.addJavaScriptFunction("listGalleryImages", listGalleryImages);
 
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/js");
@@ -37,6 +20,17 @@ export default function (eleventyConfig) {
     return api
       .getFilteredByGlob("src/blog/posts/**/*.md")
       .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addCollection("gallery", (api) => {
+    return api
+      .getFilteredByGlob("src/gallery/**/*.md")
+      .sort((a, b) => {
+        const ao = a.data.order ?? Number.MAX_SAFE_INTEGER;
+        const bo = b.data.order ?? Number.MAX_SAFE_INTEGER;
+        if (ao !== bo) return ao - bo;
+        return a.fileSlug.localeCompare(b.fileSlug, undefined, { numeric: true });
+      });
   });
 
   return {
