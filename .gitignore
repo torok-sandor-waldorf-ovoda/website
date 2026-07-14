@@ -27,7 +27,3 @@ Thumbs.db
 # Optional local tooling
 .cache/
 .eleventy-cache/
-
-# Decap CMS local uploads (keep folder)
-src/images/uploads/*
-!src/images/uploads/.gitkeep
